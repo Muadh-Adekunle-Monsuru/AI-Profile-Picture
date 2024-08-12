@@ -4,18 +4,29 @@ import { Input } from '@/components/ui/input';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Textarea } from '@/components/ui/textarea';
 import * as fal from '@fal-ai/serverless-client';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Loader, ArrowDownToLine } from 'lucide-react';
 fal.config({
 	proxyUrl: '/api/fal/proxy',
 });
 
+const initialImages = [
+	'https://images.unsplash.com/photo-1701690774955-7d06cfd3f857?q=80&w=1926&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+	'https://images.unsplash.com/photo-1701014159141-639d07c4eba4?q=80&w=1926&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+	'https://images.unsplash.com/photo-1720727226811-44865cb31c23?q=80&w=1915&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+	'https://images.unsplash.com/photo-1692607038295-d651a294abd0?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+	'https://plus.unsplash.com/premium_photo-1721893171616-ac33fcb70908?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+	'https://images.unsplash.com/photo-1657969418028-3be399356ad6?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+	'https://images.unsplash.com/photo-1700074334190-42dee8240c4e?q=80&w=1943&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+];
+const getRandomImage = () => {
+	return initialImages[Math.floor(Math.random() * initialImages.length)];
+};
 export default function Home() {
 	const [prompt, setPrompt] = useState('');
-	const [image, setImage] = useState(
-		'https://images.unsplash.com/photo-1701014159251-f86a81a6fe13?q=80&w=1926&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
-	);
+	const [image, setImage] = useState(getRandomImage);
 	const [loading, setLoading] = useState(false);
+
 	const handleSubmit = async () => {
 		if (!prompt) return;
 		setLoading(true);
